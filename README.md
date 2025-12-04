@@ -2,57 +2,6 @@
 
 このリポジトリは、Ollama と Open WebUI を連携させた Local LLM 環境構築のためのものです。
 
-## Docker Compose
-
-以下の docker-compose.yml ファイルを使用します。
-
-```yaml
-services:
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "${OLLAMA_PORT}:11434"
-    volumes:
-      - ollama:/root/.ollama
-    environment:
-      - OLLAMA_KEEP_ALIVE=24h
-    restart: unless-stopped
-  ui:
-    image: ghcr.io/open-webui/open-webui:latest
-    container_name: openwebui
-    ports:
-      - "${OPENWEBUI_PORT}:8080"
-    environment:
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
-    depends_on:
-      - ollama
-    restart: unless-stopped
-services:
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "${OLLAMA_PORT}:11434"
-    volumes:
-      - ollama:/root/.ollama
-    environment:
-      - OLLAMA_KEEP_ALIVE=24h
-    restart: unless-stopped
-  ui:
-    image: ghcr.io/open-webui/open-webui:latest
-    container_name: openwebui
-    ports:
-      - "${OPENWEBUI_PORT}:8080"
-    environment:
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
-    depends_on:
-      - ollama
-    restart: unless-stopped
-volumes:
-  ollama:
-```
-
 ## 構成
 
 - **ollama:** Ollama LLM を動作させるコンテナ
