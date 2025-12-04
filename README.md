@@ -1,7 +1,3 @@
-はい、Local LLMのためのGitリポジトリのREADMEテンプレートを作成します。以下に、提供されたdocker-composeファイルに基づいて作成したREADMEのサンプルを示します。
-
----
-
 # Local LLM 環境構築
 
 このリポジトリは、OllamaとOpen WebUIを連携させたLocal LLM環境構築のためのものです。
