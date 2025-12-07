@@ -26,9 +26,9 @@
 
 ## 環境変数
 
-- `OLLAMA_PORT`: Ollama API へのポート番号 (例: 1234)
-- `OPENWEBUI_PORT`: Open WebUI へのポート番号 (例: 8080)
-- `OLLAMA_BASE_URL`: Ollama の Base URL (例: http://localhost:1234)
+- `OLLAMA_PORT`: Ollama API へのポート番号 (例: 11434)
+- `OPENWEBUI_PORT`: Open WebUI へのポート番号 (例: 3000)
+- `OLLAMA_BASE_URL`: Ollama の Base URL (例: http://host.docker.internal:11434)
 
 ## 注意事項
 
