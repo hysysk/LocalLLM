@@ -30,6 +30,23 @@
 - `OPENWEBUI_PORT`: Open WebUI へのポート番号 (例: 3000)
 - `OLLAMA_BASE_URL`: Ollama の Base URL (例: http://host.docker.internal:11434)
 
+## 更新方法
+
+Ollama と Open WebUI のイメージを最新版に更新するには、以下の手順を実行します。
+
+1. 最新のイメージをプルします。
+   ```bash
+   docker compose pull
+   ```
+2. コンテナを再作成して起動します。
+   ```bash
+   docker compose up -d --force-recreate
+   ```
+3. 古いイメージを削除します。
+   ```bash
+   docker image prune -f
+   ```
+
 ## 注意事項
 
 - この設定はあくまでサンプルです。 実際の環境に合わせて環境変数やポート番号を調整してください。
