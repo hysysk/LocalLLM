@@ -1,32 +1,7 @@
 .DS_Store
 .env
 
-# OpenClaw config: ignore everything except the sanitized config
-openclaw-config/*
-!openclaw-config/openclaw.json
-
-# OpenClaw workspace: ignore everything by default
-openclaw-workspace/*
-
-# Workspace configuration files
-!openclaw-workspace/AGENTS.md
-!openclaw-workspace/HEARTBEAT.md
-!openclaw-workspace/IDENTITY.md
-!openclaw-workspace/SOUL.md
-!openclaw-workspace/TOOLS.md
-!openclaw-workspace/USER.md
-
-# Skills directory
-!openclaw-workspace/skills/
-openclaw-workspace/skills/*
-
-# image-to-markdown skill
-!openclaw-workspace/skills/image-to-markdown/
-openclaw-workspace/skills/image-to-markdown/*
-
-!openclaw-workspace/skills/image-to-markdown/SKILL.md
-
-!openclaw-workspace/skills/image-to-markdown/scripts/
-openclaw-workspace/skills/image-to-markdown/scripts/*
-
-!openclaw-workspace/skills/image-to-markdown/scripts/image-to-md.mjs
+workspace/*
+!workspace/tools/
+workspace/tools/*
+!workspace/tools/image-to-md.mjs
