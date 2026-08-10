@@ -36,8 +36,8 @@
     ```
 
 3.  各サービスへアクセス:
-    - Open WebUI: `http://localhost:${OPENWEBUI_PORT}` (デフォルト: http://localhost:3100)
-    - OpenClaw ダッシュボード: `http://localhost:${OPENCLAW_GATEWAY_PORT}` (デフォルト: http://localhost:18789)
+    - Open WebUI: `http://localhost:${OPENWEBUI_PORT}`
+    - OpenClaw ダッシュボード: `http://localhost:${OPENCLAW_GATEWAY_PORT}`
 
 ## OpenClaw の使用方法
 
@@ -87,14 +87,14 @@ OpenClaw は以下のチャットアプリと連携できます:
 ## 環境変数
 
 - `OLLAMA_PORT`: Ollama API へのポート番号 (例: 11434)
-- `OPENWEBUI_PORT`: Open WebUI へのポート番号 (例: 3100)
+- `OPENWEBUI_PORT`: Open WebUI へのポート番号 (例: 3000)
 - `OLLAMA_BASE_URL`: Ollama の Base URL (例: http://host.docker.internal:11434)
 - `OPENCLAW_GATEWAY_PORT`: OpenClaw ゲートウェイのポート番号 (デフォルト: 18789)
 - `OPENCLAW_BRIDGE_PORT`: OpenClaw ブリッジのポート番号 (デフォルト: 18790)
 - `OPENCLAW_GATEWAY_BIND`: バインドアドレス (lan, loopback, または 0.0.0.0)
 - `OPENCLAW_TZ`: タイムゾーン (デフォルト: Asia/Tokyo)
 
-詳細は `.env` ファイルを参照してください。
+詳細は `.env` ファイルを参照してください。他のアプリケーションと競合しないようにポート番号を変更することがあります。
 
 ## 更新方法
 
