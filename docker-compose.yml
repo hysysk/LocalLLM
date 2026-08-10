@@ -39,6 +39,7 @@ services:
     volumes:
       - openclaw-config:/home/node/.openclaw
       - openclaw-workspace:/home/node/.openclaw/workspace
+      - ${OBSIDIAN_VAULT}:/home/node/obsidian:ro
     ports:
       - "${OPENCLAW_GATEWAY_PORT:-18789}:18789"
       - "${OPENCLAW_BRIDGE_PORT:-18790}:18790"
@@ -102,4 +103,6 @@ volumes:
   ollama:
   openwebui:
   openclaw-config:
+    external: true
+    name: local_openclaw-config
   openclaw-workspace:
