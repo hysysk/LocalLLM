@@ -17,7 +17,7 @@
   - `depends_on: ollama` (Ollama コンテナ起動後に起動)
 - **open-terminal:** Open Terminal を動作させるコンテナ
   - `ghcr.io/open-webui/open-terminal:latest` Docker イメージを使用
-  - ポート: `127.0.0.1:8000:8000` (ローカルホストのみに公開)
+  - ポート: `127.0.0.1:${OPEN_TERMINAL_PORT}:8000` (ローカルホストのみに公開)
   - `OPEN_TERMINAL_API_KEY` による Bearer 認証が必須
   - ボリューム: `open-terminal:/home/user` (ホームディレクトリを永続化)
   - ボリューム: `./workspace:/home/user/workspace` (作業ディレクトリをホストと共有)
@@ -51,7 +51,7 @@
 
 4. 各サービスへアクセス:
    - Open WebUI: `http://localhost:${OPENWEBUI_PORT}`
-   - Open Terminal API: `http://localhost:8000`
+   - Open Terminal API: `http://localhost:${OPEN_TERMINAL_PORT}`
 
 ## Open Terminal の使用方法
 
@@ -64,17 +64,17 @@ Open WebUI の管理者設定から Open Terminal を登録します。
 - URL: `http://open-terminal:8000` (Docker ネットワーク経由)
 - API キー: `.env` で設定した `OPEN_TERMINAL_API_KEY`
 
-`docker compose` が作成する共通ネットワーク上にあるため、コンテナ名 `open-terminal` で名前解決できます。ホストから直接叩く場合は `http://localhost:8000` を使います。
+`docker compose` が作成する共通ネットワーク上にあるため、コンテナ名 `open-terminal` で名前解決できます。この URL のポートはコンテナ内部のポート (常に 8000) なので、`OPEN_TERMINAL_PORT` を変更しても変わりません。ホストから直接叩く場合は `http://localhost:${OPEN_TERMINAL_PORT}` を使います。
 
 ### API の確認
 
 ```bash
 # API 仕様を表示
-curl -s http://localhost:8000/openapi.json | jq '.info'
+curl -s "http://localhost:${OPEN_TERMINAL_PORT}/openapi.json" | jq '.info'
 
 # ディレクトリ一覧 (要 API キー)
 curl -s -H "Authorization: Bearer ${OPEN_TERMINAL_API_KEY}" \
-  "http://localhost:8000/files/list?directory=workspace"
+  "http://localhost:${OPEN_TERMINAL_PORT}/files/list?directory=workspace"
 ```
 
 主なエンドポイント:
@@ -95,35 +95,12 @@ curl -s -H "Authorization: Bearer ${OPEN_TERMINAL_API_KEY}" \
 
 `./workspace` がコンテナ内の `/home/user/workspace` にマウントされており、ホストとファイルを共有できます。ワークスペースの中身は `.gitignore` で除外されているため、個人のファイルはリポジトリにコミットされません (`workspace/tools/` 配下のスクリプトを除く)。
 
-## ツール
-
-### image-to-md.mjs
-
-`workspace/tools/image-to-md.mjs` は、画像を Ollama の Vision モデルで Markdown に文字起こしするスクリプトです。Open Terminal のコンテナ内から実行します。
-
-```bash
-docker exec open-terminal node workspace/tools/image-to-md.mjs --help
-
-# workspace/inbox の最新画像を workspace/transcriptions に出力
-docker exec open-terminal node workspace/tools/image-to-md.mjs
-
-# 入力・出力を指定
-docker exec open-terminal node workspace/tools/image-to-md.mjs \
-  --input inbox/page-01.jpg \
-  --output-dir transcriptions
-```
-
-- 対応形式: `.jpg` / `.jpeg` / `.png` / `.webp`
-- デフォルトモデル: `qwen2.5vl:7b` (`--model` または `IMAGE_MODEL` で変更可能)
-- 出力: タイトルから生成した slug 名の Markdown ファイル (frontmatter 付き)
-- 接続先: `http://ollama:11434/api/chat` (`OLLAMA_URL` で変更可能)
-- 実行後は `keep_alive: 0` で Vision モデルをアンロードします
-
 ## 環境変数
 
 - `OLLAMA_PORT`: Ollama API へのポート番号 (例: 11434)
 - `OPENWEBUI_PORT`: Open WebUI へのポート番号 (例: 3100)
 - `OLLAMA_BASE_URL`: Ollama の Base URL (例: http://host.docker.internal:11434)
+- `OPEN_TERMINAL_PORT`: Open Terminal API へのポート番号 (例: 8000)
 - `OPEN_TERMINAL_API_KEY`: Open Terminal の API キー (必須)
 
 詳細は `.env` ファイルを参照してください。他のアプリケーションと競合しないようにポート番号を変更することがあります。
